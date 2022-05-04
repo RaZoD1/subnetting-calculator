@@ -8,20 +8,27 @@ export const DisplayTypes = [
 
 export default function IPv4Address(props) {
 
-  const { ipString, displayType, seperator } = props;
-  if(!IPv4.isValid(ipString)) {
-    return <div>Invalid IPv4 address</div>;
+  const { ipString, displayType, seperator, ip } = props;
+
+  let ipv4 = null;
+  if(!(ip instanceof IPv4)) {
+    if(!IPv4.isValid(ipString)) {
+      return <span>Invalid IPv4 address</span>;
+    }
+
+    ipv4 = new IPv4(ipString);
+    
+  }else {
+    ipv4 = ip;
   }
-
-  const ipv4 = new IPv4(ipString);
-
+  
   const display = displayType === 'decimal' ? ipv4.getDecimalString(seperator) : ipv4.getBinaryString(seperator);
-
-  return <p>{display}</p>;
+  return <span>{display}</span>;
 }
 
 IPv4Address.defaultProps = {
-  ipString: '0.0.0.0',
+  ipString: '',
   displayType: 'decimal',
-  seperator: '.'
+  seperator: '.',
+  ip: null,
 }

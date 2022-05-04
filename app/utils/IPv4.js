@@ -16,7 +16,7 @@ export class IPv4 {
 
   get binary() {
     return this.octets.map(octet => {
-      return parseInt(octet).toString(2);
+      return parseInt(octet).toString(2).padStart(8, '0');
     });
   }
   getBinaryString(seperator) {
