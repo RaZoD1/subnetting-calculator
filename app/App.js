@@ -1,15 +1,18 @@
 import React from "react";
 import IPv4Address from "./components/IPv4Address";
-import { IPv4 } from "./utils/IPv4";
+import { IPv4, IPv4Subnetmask } from "./utils/IPv4";
 import { useState } from "react";
 import IPv4AddressInput from "./components/IPv4AddressInput";
+import IPv4SubnetInput from "./components/IPv4SubnetInput";
 
 export default function App() {
 
   const [ipUserString, setIpUserString] = useState("");
+  const [maskUserString, setMaskUserString] = useState("");
   const [ipv4, setIpv4] = useState(null);
+  const [ipv4Subnetmask, setIpv4Subnetmask] = useState(null);
 
-  const handleChange = (ipUserString) => {
+  const handleIpChange = (ipUserString) => {
     setIpUserString(ipUserString);
     if(IPv4.isValid(ipUserString)) {
       setIpv4(new IPv4(ipUserString));
@@ -17,7 +20,15 @@ export default function App() {
       setIpv4(null);
     }
   }
-  console.log(ipv4);
+  const handleMaskChange = (maskUserString) => {
+    setMaskUserString(maskUserString);
+    if(IPv4Subnetmask.isValid(maskUserString)) {
+      setIpv4Subnetmask(new IPv4Subnetmask(maskUserString));
+    }else{
+      setIpv4Subnetmask(null);
+    }
+  } 
+
   return (
     <div>
       <h1>Hello World</h1>
@@ -25,7 +36,7 @@ export default function App() {
       <br />
       <IPv4Address ip={ipv4} displayType='binary' seperator=':'/>
       <br />
-      <IPv4AddressInput ipUserString={ipUserString} onChange={handleChange}/>
+      <IPv4SubnetInput ipUserString={ipUserString} onIpChange={handleIpChange} maskUserString={maskUserString} onMaskChange={handleMaskChange}/>
     </div>
   );
 }
