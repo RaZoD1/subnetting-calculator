@@ -1,4 +1,6 @@
 export const regexIPv4 = /^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)(\.(?!$)|$)){4}$/;
+export const regexIPv4PrefixMask = /^\/((3[0-2])|([1-2]?[0-9]))$/;
+
 
 export class IPv4 {
   constructor(ipString) {
@@ -74,11 +76,11 @@ export class IPv4Subnetmask{
 
     this.format = IPv4.isValid(maskString) ? 'dottedDecimal' : 'prefixLength';
     if(this.format == 'dottedDecimal') {
-      console.log("Dotted");
       this.ipv4 = new IPv4(maskString);
       this.bytes = this.ipv4.getBytes();
+
     } else if(this.format == 'prefixLength') {
-      this.prefixLength = parseInt(maskString);
+      this.prefixLength = parseInt(maskString.substring(1));
       console.log("PrefixLength: " + this.prefixLength);
       this.bytes = IPv4Subnetmask.getBytesFromPrefixLength(this.prefixLength);
       console.log("bytes: " + this.bytes.toString(2));
@@ -112,24 +114,26 @@ export class IPv4Subnetmask{
     if(IPv4.isValid(maskString)){
       this.ipv4 = new IPv4(maskString);
       let mask = this.ipv4.getBytes();
-      
+      console.log("lol: "+mask.toString(2).padStart(32, '0'));
       let i;
       // check if beginning bits are 1s
       for(i = 31; i >= 0; i--){
-        if(mask & (1 << i) == 0)
+        if((mask & (1 << i)) == 0)
           break;
       }
+      console.log("i: " + i);
       // check if ending bits are 0s
       for(; i>= 0; i--){
-        if(mask & (1 << i) != 0)
+        if((mask & (1 << i)) != 0)
           return false;
       }
+      console.log("Is vlaid");
       return true;
       
     }
-    if(!isNaN(maskString)){
-      let mask = parseInt(maskString);
-      return mask >= 0 && mask <= 32;
+    if(maskString.match(regexIPv4PrefixMask)){
+      //let mask = parseInt(maskString.substring(1));
+      return true;
     }
     return false;
   }
