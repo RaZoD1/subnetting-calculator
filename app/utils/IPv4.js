@@ -46,6 +46,7 @@ export class IPv4 {
 
   // return a new IPv4 instance from bytes
   static fromBytes(bytes) {
+    if(bytes < 0 || bytes > 4294967295) { return null; }
     let filter = 0xff_00_00_00;
     let ipString = '';
     for (let i = 0; i < 4; i++) {
@@ -76,13 +77,10 @@ export class IPv4Subnetmask {
     this.format = IPv4.isValid(maskString) ? 'dottedDecimal' : 'prefixLength';
     if (this.format == 'dottedDecimal') {
       this.ipv4 = new IPv4(maskString);
-      this.bytes = this.ipv4.getBytes();
     } else if (this.format == 'prefixLength') {
       this.prefixLength = parseInt(maskString.substring(1));
-      console.log('PrefixLength: ' + this.prefixLength);
-      this.bytes = IPv4Subnetmask.getBytesFromPrefixLength(this.prefixLength);
-      console.log('bytes: ' + this.bytes.toString(2));
-      this.ipv4 = IPv4.fromBytes(this.bytes);
+      let bytes = IPv4Subnetmask.getBytesFromPrefixLength(this.prefixLength);
+      this.ipv4 = IPv4.fromBytes(bytes);  
     }
   }
 
@@ -96,6 +94,8 @@ export class IPv4Subnetmask {
   getDecimalString = (seperator) => this.ipv4.getDecimalString(seperator);
 
   getBinaryString = (seperator) => this.ipv4.getBinaryString(seperator);
+
+  getBytes = () => this.ipv4.getBytes();
 
   // returns if the subnetmask is a valid subnetmask
   isValid() {

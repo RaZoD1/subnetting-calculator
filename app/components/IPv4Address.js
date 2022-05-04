@@ -21,7 +21,7 @@ export default function IPv4Address(props) {
     displayType === 'decimal'
       ? ipv4.getDecimalString(seperator)
       : ipv4.getBinaryString(seperator);
-  return <span>{display}</span>;
+  return <span style={{fontFamily: 'monospace'}}>{display}</span>;
 }
 
 IPv4Address.defaultProps = {
