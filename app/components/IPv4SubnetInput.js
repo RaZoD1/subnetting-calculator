@@ -3,32 +3,30 @@ import React from 'react';
 import IPv4AddressInput from './IPv4AddressInput';
 import IPv4MaskInput from './IPv4MaskInput';
 
-export default function IPv4SubnetInput(props){
-  const { ipUserString, onIpChange, ipPlaceholder, ipLabel} = props;
-  const { maskUserString, onMaskChange, maskPlaceholder, maskLabel} = props;
+export default function IPv4SubnetInput(props) {
+  const { onIpChange, ipPlaceholder, ipLabel } = props;
+  const { onMaskChange, maskPlaceholder, maskLabel } = props;
 
   return (
     <div>
       <label>
-        {ipLabel} &nbsp;
-        <IPv4AddressInput ipUserString={ipUserString} onChange={onIpChange} placeholder={ipPlaceholder} />
-        
+        <IPv4AddressInput onChange={onIpChange} placeholder={ipPlaceholder} />
+        &nbsp;{ipLabel}
       </label>
       <br />
       <label>
-        {maskLabel} &nbsp;
-        <IPv4MaskInput maskUserString={maskUserString} onChange={onMaskChange} placeholder={maskPlaceholder} />
+        <IPv4MaskInput onChange={onMaskChange} placeholder={maskPlaceholder} />
+        &nbsp;{maskLabel}
       </label>
     </div>
-  )
+  );
 }
 IPv4SubnetInput.defaultProps = {
-  ipUserString: '',
   onIpChange: () => {},
   ipPlaceholder: 'Enter an IPv4 Address',
   ipLabel: 'IPv4 Address',
-  maskUserString: '',
+
   onMaskChange: () => {},
   maskPlaceholder: 'Enter an IPv4 Subnetmask',
   maskLabel: 'Subnetmask',
-}
+};
