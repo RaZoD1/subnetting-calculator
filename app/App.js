@@ -2,7 +2,7 @@ import React from "react";
 import IPv4Address from "./components/IPv4Address";
 import { IPv4 } from "./utils/IPv4";
 import { useState } from "react";
-import IPv4Input from "./components/IPv4Input";
+import IPv4AddressInput from "./components/IPv4AddressInput";
 
 export default function App() {
 
@@ -25,7 +25,7 @@ export default function App() {
       <br />
       <IPv4Address ip={ipv4} displayType='binary' seperator=':'/>
       <br />
-      <IPv4Input ipUserString={ipUserString} onChange={handleChange}/>
+      <IPv4AddressInput ipUserString={ipUserString} onChange={handleChange}/>
     </div>
   );
 }
