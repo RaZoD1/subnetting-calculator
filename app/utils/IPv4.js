@@ -64,17 +64,24 @@ export class IPv4Subnetmask{
     }
 
     this.format = IPv4.isValid(maskString) ? 'dottedDecimal' : 'prefixLength';
-    if(this.format = 'dottedDecimal') {
+    if(this.format == 'dottedDecimal') {
+      console.log("Dotted");
       this.ipv4 = new IPv4(maskString);
       this.bytes = this.ipv4.getBytes();
-    } else if(this.format = 'prefixLength') {
+    } else if(this.format == 'prefixLength') {
       this.prefixLength = parseInt(maskString);
       this.bytes = IPv4Subnetmask.getBytesFromPrefixLength(this.prefixLength);
       this.ipv4 = IPv4.fromBytes(this.bytes);
     }
   }
 
+  getStringOctets = () => this.ipv4.getStringOctets();
 
+  getDecimalOctets = () => this.ipv4.getDecimalOctets();
+
+  getDecimalString = (seperator) => this.ipv4.getDecimalString(seperator);
+
+  getBinaryString = (seperator) => this.ipv4.getBinaryString(seperator);
   
   isValid(){
     return IPv4Subnetmask.isValid(this.maskString);
@@ -104,7 +111,7 @@ export class IPv4Subnetmask{
       
     }
     if(!isNaN(maskString)){
-      mask = parseInt(maskString);
+      let mask = parseInt(maskString);
       return mask >= 0 && mask <= 32;
     }
     return false;
