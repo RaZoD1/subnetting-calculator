@@ -13,7 +13,7 @@ export class IPv4 {
   }
   
   getDecimalOctets() {
-    return this.stringOctets.map(octet => {
+    return this.getStringOctets().map(octet => {
       return parseInt(octet);
     }
     );
@@ -28,11 +28,11 @@ export class IPv4 {
 
   getDecimalString(seperator) {
     seperator = seperator || '.';
-    return this.decimal.join(seperator);
+    return this.getDecimalOctets().join(seperator);
   }
 
   getBytes(){
-    return this.decimal.reduce((prev, curr) => {
+    return this.getDecimalOctets.reduce((prev, curr) => {
       return prev * 256 + curr;
     }, 0);
   }
@@ -74,7 +74,7 @@ export class IPv4Subnetmask{
     }
   }
 
-  
+
   
   isValid(){
     return IPv4Subnetmask.isValid(this.maskString);
