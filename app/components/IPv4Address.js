@@ -8,12 +8,12 @@ export const DisplayTypes = [
 
 export default function IPv4Address(props) {
 
-  const { ipString, displayType, seperator, ip } = props;
+  const { ipString, displayType, seperator, ip, invalidMessage } = props;
 
   let ipv4 = null;
   if(!(ip instanceof IPv4)) {
     if(!IPv4.isValid(ipString)) {
-      return <span>Invalid IPv4 address</span>;
+      return <span>{ invalidMessage }</span>;
     }
 
     ipv4 = new IPv4(ipString);
@@ -31,4 +31,5 @@ IPv4Address.defaultProps = {
   displayType: 'decimal',
   seperator: '.',
   ip: null,
+  invalidMessage: 'Invalid IPv4 address',
 }
