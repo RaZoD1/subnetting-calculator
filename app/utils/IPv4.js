@@ -37,7 +37,7 @@ export class IPv4 {
 
   // return the bytes of the IPv4 address
   getBytes(){
-    return this.getDecimalOctets.reduce((prev, curr) => {
+    return this.getDecimalOctets().reduce((prev, curr) => {
       return prev * 256 + curr;
     }, 0);
   }
