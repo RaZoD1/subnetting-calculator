@@ -8,10 +8,12 @@ export class IPv4 {
     }
   }
 
+  // returns an array of the octets as strings
   getStringOctets() {
     return this.ipString.split(".");
   }
   
+  // returns an array of integers of the 4 octets
   getDecimalOctets() {
     return this.getStringOctets().map(octet => {
       return parseInt(octet);
@@ -19,6 +21,7 @@ export class IPv4 {
     );
   }
 
+  // return the binary representation of the IPv4 address
   getBinaryString(seperator) {
     seperator = seperator || '.';
     return this.getDecimalOctets().map(octet => {
@@ -26,29 +29,35 @@ export class IPv4 {
     }).join(seperator);
   }
 
+  // returns the decimal representation of the IPv4 address
   getDecimalString(seperator) {
     seperator = seperator || '.';
     return this.getDecimalOctets().join(seperator);
   }
 
+  // return the bytes of the IPv4 address
   getBytes(){
     return this.getDecimalOctets.reduce((prev, curr) => {
       return prev * 256 + curr;
     }, 0);
   }
 
+  // return a new IPv4 instance from bytes
   static fromBytes(bytes) {
+    let filter = 0xFF_00_00_00;
     let ipString = '';
-    let i;
-    for(i = 0; i < 4; i++){
-      ipString += bytes >>> (i * 8) & 0xff;
-      if(i !== 3) {
+    for(let i = 0; i < 4; i++){
+      ipString += ((bytes & filter) >>> (3-i)*8).toString();
+      filter = filter >>> 8;
+      if(i < 3) {
         ipString += '.';
       }
     }
+    console.log(ipString);
     return new IPv4(ipString);
   }
 
+  // check if the string is a valid IPv4 address
   static isValid(ipString) {
     return ipString.match(regexIPv4);
   }
@@ -70,11 +79,16 @@ export class IPv4Subnetmask{
       this.bytes = this.ipv4.getBytes();
     } else if(this.format == 'prefixLength') {
       this.prefixLength = parseInt(maskString);
+      console.log("PrefixLength: " + this.prefixLength);
       this.bytes = IPv4Subnetmask.getBytesFromPrefixLength(this.prefixLength);
+      console.log("bytes: " + this.bytes.toString(2));
       this.ipv4 = IPv4.fromBytes(this.bytes);
     }
   }
 
+  /*
+  * Pass through methods to the IPv4 object
+  */
   getStringOctets = () => this.ipv4.getStringOctets();
 
   getDecimalOctets = () => this.ipv4.getDecimalOctets();
@@ -83,14 +97,17 @@ export class IPv4Subnetmask{
 
   getBinaryString = (seperator) => this.ipv4.getBinaryString(seperator);
   
+  // returns if the subnetmask is a valid subnetmask
   isValid(){
     return IPv4Subnetmask.isValid(this.maskString);
   }
   
+  // returns the bytes representing the prefix length
   static getBytesFromPrefixLength(prefixLength) {
-    return Math.pow(2, prefixLength-1) << (32 - prefixLength);
+    return 0xFFFF_FFFF - (Math.pow(2, 32-prefixLength ) - 1);
   }
 
+  // returns if the string is a valid subnetmask
   static isValid(maskString) {
     if(IPv4.isValid(maskString)){
       this.ipv4 = new IPv4(maskString);
