@@ -46,7 +46,9 @@ export class IPv4 {
 
   // return a new IPv4 instance from bytes
   static fromBytes(bytes) {
-    if(bytes < 0 || bytes > 4294967295) { return null; }
+    if (bytes < 0 || bytes > 4294967295) {
+      return null;
+    }
     let filter = 0xff_00_00_00;
     let ipString = '';
     for (let i = 0; i < 4; i++) {
@@ -80,7 +82,7 @@ export class IPv4Subnetmask {
     } else if (this.format == 'prefixLength') {
       this.prefixLength = parseInt(maskString.substring(1));
       let bytes = IPv4Subnetmask.getBytesFromPrefixLength(this.prefixLength);
-      this.ipv4 = IPv4.fromBytes(bytes);  
+      this.ipv4 = IPv4.fromBytes(bytes);
     }
   }
 
@@ -100,6 +102,39 @@ export class IPv4Subnetmask {
   // returns if the subnetmask is a valid subnetmask
   isValid() {
     return IPv4Subnetmask.isValid(this.maskString);
+  }
+
+  // returns the prefix length of the subnetmask
+  getPrefixLength() {
+    if (this.format == 'dottedDecimal') {
+      return IPv4Subnetmask.getPrefixLengthFromDottedDecimal(this.maskString);
+    } else if (this.format == 'prefixLength') {
+      return this.prefixLength;
+    }
+  }
+
+  // returns the prefix length of the subnetmask
+  static getPrefixLengthFromDottedDecimal(maskString) {
+    if (!IPv4.isValid(maskString)) return null;
+    let mask = new IPv4(maskString);
+    let prefixLength = 0;
+    let lastBit = false;
+    for (let i = 0; i < 4; i++) {
+      let octet = mask.getDecimalOctets()[i];
+      let prefix = 0;
+      for (let j = 0; j < 8; j++) {
+        if (octet & (0b1000_0000 >>> j)) {
+          prefix++;
+          if (lastBit) {
+            return null;
+          }
+        } else {
+          lastBit = true;
+        }
+      }
+      prefixLength += prefix;
+    }
+    return prefixLength;
   }
 
   // returns the bytes representing the prefix length
