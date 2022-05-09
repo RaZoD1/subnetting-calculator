@@ -13,6 +13,7 @@ import { IPv4, IPv4Subnetmask } from '../utils/IPv4';
 
 import TitledContainer from './TitledContainer';
 import SplitTableContainer from './SplitTableContainer';
+import IPv4SubnetSplitter from './IPv4SubnetSplitter';
 
 export default function IPv4SubnetStats(props) {
   const [ip, setIp] = useState(null);
@@ -104,6 +105,8 @@ export default function IPv4SubnetStats(props) {
       <SplitTableContainer title="Binary" align={'left'} rows={binary} />
 
       <SplitTableContainer title="Details" align={'left'} rows={details} />
+
+      {ip && mask ? <IPv4SubnetSplitter ip={ip} mask={mask} /> : null}
     </div>
   );
 }
