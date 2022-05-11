@@ -35,6 +35,7 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: './app/index.html',
+      favicon: './app/imgs/computer-networks.png',
     }),
   ],
 };
