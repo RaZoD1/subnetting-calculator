@@ -76,7 +76,7 @@ export default function IPv4SubnetSplitter(props) {
       <div>{props.ip.getBytes()}</div>
       <div>
         <label>
-          Amount of subnets:&nbsp;
+          Amount of subnets&nbsp;
           <input
             type="text"
             onChange={handleChange}

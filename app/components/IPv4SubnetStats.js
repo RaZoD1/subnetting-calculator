@@ -93,7 +93,16 @@ export default function IPv4SubnetStats(props) {
   ];
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-around',
+        flexDirection: 'column',
+        alignItems: 'center',
+        height: '100%',
+        width: '100%',
+      }}
+    >
       <h1>IPv4SubnetStats</h1>
       <TitledContainer title="Input">
         <IPv4SubnetInput

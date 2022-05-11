@@ -46,7 +46,7 @@ export class IPv4 {
 
   // return a new IPv4 instance from bytes
   static fromBytes(bytes) {
-    if (bytes < 0 || bytes > 4294967295) {
+    if (bytes < 0 || bytes > 0xff_ff_ff_ff) {
       return null;
     }
     let filter = 0xff_00_00_00;
