@@ -58,7 +58,6 @@ export class IPv4 {
         ipString += '.';
       }
     }
-    console.log(ipString);
     return new IPv4(ipString);
   }
 
@@ -147,18 +146,15 @@ export class IPv4Subnetmask {
     if (IPv4.isValid(maskString)) {
       this.ipv4 = new IPv4(maskString);
       let mask = this.ipv4.getBytes();
-      console.log('lol: ' + mask.toString(2).padStart(32, '0'));
       let i;
       // check if beginning bits are 1s
       for (i = 31; i >= 0; i--) {
         if ((mask & (1 << i)) == 0) break;
       }
-      console.log('i: ' + i);
       // check if ending bits are 0s
       for (; i >= 0; i--) {
         if ((mask & (1 << i)) != 0) return false;
       }
-      console.log('Is vlaid');
       return true;
     }
     if (maskString.match(regexIPv4PrefixMask)) {
