@@ -107,7 +107,9 @@ export default function IPv4SubnetStats(props) {
       <TitledContainer title="Input">
         <IPv4SubnetInput
           onIpChange={handleIpChange}
+          ipPlaceholder="eg. 192.168.0.1"
           onMaskChange={handleMaskChange}
+          maskPlaceholder="eg. /24 or 255.255.0.0"
         />
       </TitledContainer>
 

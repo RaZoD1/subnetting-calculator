@@ -13,3 +13,18 @@ table.splitTable tr td {
   border: none;
   text-align: left;
 }
+
+thead tr {
+  border: none;
+  border-bottom: 2px dotted darkcyan;
+  text-align: left;
+}
+
+input {
+  transition: 0.25s;
+}
+
+input .inputError {
+  transition: 0.5s;
+  background-color: rgb(255, 158, 158);
+}

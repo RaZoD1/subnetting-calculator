@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IPv4Subnetmask, IPv4 } from '../utils/IPv4';
 import {
   getSubnetAddress,
@@ -71,9 +71,12 @@ export default function IPv4SubnetSplitter(props) {
     return [0, 0];
   };
 
+  useEffect(() => {
+    calculateSubnets(nearestValidNets);
+  }, [ip, mask]);
+
   return (
     <TitledContainer title={'Subnet Splitter'}>
-      <div>{props.ip.getBytes()}</div>
       <div>
         <label>
           Amount of subnets&nbsp;
@@ -81,21 +84,32 @@ export default function IPv4SubnetSplitter(props) {
             type="text"
             onChange={handleChange}
             value={splitUserString}
-            style={inputError ? { color: 'red', fontWeight: 'bold' } : {}}
+            className={inputError ? 'input-error' : ''}
           />{' '}
           <span>({nearestValidNets})</span>
         </label>
       </div>
-      <div>
-        <table style={{ borderCollapse: 'separate', borderSpacing: '50px 0' }}>
+      <div
+        style={{
+          overflowY: 'scroll',
+          height: '10rem',
+          border: '1px solid black',
+        }}
+      >
+        <table
+          style={{
+            borderCollapse: 'separate',
+            borderSpacing: '50px 0',
+          }}
+        >
           <thead>
             <tr>
-              <td>Nr.</td>
-              <td>Subnetmask</td>
-              <td>Subnetaddress</td>
-              <td>First Host</td>
-              <td>Last Host</td>
-              <td>Broadcast Address</td>
+              <th>Nr.</th>
+              <th>Subnetmask</th>
+              <th>Subnetaddress</th>
+              <th>First Host</th>
+              <th>Last Host</th>
+              <th>Broadcast Address</th>
             </tr>
           </thead>
           <tbody>
