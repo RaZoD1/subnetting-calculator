@@ -2,22 +2,41 @@ import React from 'react';
 
 import IPv4AddressInput from './IPv4AddressInput';
 import IPv4MaskInput from './IPv4MaskInput';
+import SplitTable from './SplitTable';
 
 export default function IPv4SubnetInput(props) {
   const { onIpChange, ipPlaceholder, ipLabel } = props;
   const { onMaskChange, maskPlaceholder, maskLabel } = props;
 
+  const ipId = Math.random().toString(36).substring(2, 12);
+  const maskId = Math.random().toString(36).substring(2, 12);
+
+  const rows = [
+    {
+      left: <label htmlFor={ipId}>{ipLabel}</label>,
+      right: (
+        <IPv4AddressInput
+          id={ipId}
+          onChange={onIpChange}
+          placeholder={ipPlaceholder}
+        />
+      ),
+    },
+    {
+      left: <label htmlFor={maskId}>{maskLabel}</label>,
+      right: (
+        <IPv4MaskInput
+          id={maskId}
+          onChange={onMaskChange}
+          placeholder={maskPlaceholder}
+        />
+      ),
+    },
+  ];
+
   return (
     <div>
-      <label>
-        <IPv4AddressInput onChange={onIpChange} placeholder={ipPlaceholder} />
-        &nbsp;{ipLabel}
-      </label>
-      <br />
-      <label>
-        <IPv4MaskInput onChange={onMaskChange} placeholder={maskPlaceholder} />
-        &nbsp;{maskLabel}
-      </label>
+      <SplitTable rows={rows} />
     </div>
   );
 }
