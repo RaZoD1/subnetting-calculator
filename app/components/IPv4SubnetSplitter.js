@@ -9,6 +9,7 @@ import {
 } from '../utils/Subnetting';
 import TitledContainer from './TitledContainer';
 import IPv4Address from './IPv4Address';
+import IPv4SubnetRow from './IPv4SubnetRow';
 
 export default function IPv4SubnetSplitter(props) {
   const { ip, mask } = props;
@@ -113,28 +114,9 @@ export default function IPv4SubnetSplitter(props) {
             </tr>
           </thead>
           <tbody>
-            {subnets.map((subnet, index) => {
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>
-                    <IPv4Address ip={subnet.mask} />
-                  </td>
-                  <td>
-                    <IPv4Address ip={subnet.subnetAddress} />
-                  </td>
-                  <td>
-                    <IPv4Address ip={subnet.firstHost} />
-                  </td>
-                  <td>
-                    <IPv4Address ip={subnet.lastHost} />
-                  </td>
-                  <td>
-                    <IPv4Address ip={subnet.broadcast} />
-                  </td>
-                </tr>
-              );
-            })}
+            {subnets.map((subnet, index) => (
+              <IPv4SubnetRow subnet={subnet} index={index} />
+            ))}
           </tbody>
         </table>
       </div>
