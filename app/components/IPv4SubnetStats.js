@@ -9,7 +9,6 @@ import {
   getFirstHost,
   getLastHost,
 } from '../utils/Subnetting';
-import { IPv4, IPv4Subnetmask } from '../utils/IPv4';
 
 import TitledContainer from './TitledContainer';
 import SplitTableContainer from './SplitTableContainer';
