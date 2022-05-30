@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: sans-serif;
 }
 
@@ -20,11 +20,6 @@ thead tr {
   text-align: left;
 }
 
-input {
-  transition: 0.25s;
-}
-
-input .inputError {
-  transition: 0.5s;
-  background-color: rgb(255, 158, 158);
-}
+input.input-error {
+  background-color: rgba(255, 158, 158, 0.329);
+} */
