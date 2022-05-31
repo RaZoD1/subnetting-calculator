@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { IPv4 } from '../utils/IPv4';
 
+import Form from 'react-bootstrap/Form';
+
 export default function IPv4Input(props) {
   const { onChange, placeholder } = props;
 
@@ -19,18 +21,16 @@ export default function IPv4Input(props) {
     }
   };
 
-  const errorStyle = {
-    color: 'red',
-    fontWeight: 'bold',
-  };
-
+  const classes = [];
+  if (ipIsValid) classes.push('is-valid');
+  if (!(ipIsValid || ipUserString == '')) classes.push('is-invalid');
   return (
-    <input
+    <Form.Control
       type="text"
       value={ipUserString}
       onChange={handleChange}
       placeholder={placeholder}
-      style={ipIsValid || ipUserString == '' ? undefined : errorStyle}
+      className={classes.join(' ')}
     />
   );
 }

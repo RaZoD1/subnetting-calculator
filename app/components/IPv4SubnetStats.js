@@ -14,6 +14,11 @@ import TitledContainer from './TitledContainer';
 import SplitTableContainer from './SplitTableContainer';
 import IPv4SubnetSplitter from './IPv4SubnetSplitter';
 
+import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+
 export default function IPv4SubnetStats(props) {
   const [ip, setIp] = useState(null);
   const [mask, setMask] = useState(null);
@@ -92,31 +97,38 @@ export default function IPv4SubnetStats(props) {
   ];
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-around',
-        flexDirection: 'column',
-        alignItems: 'center',
-        height: '100%',
-        width: '100%',
-      }}
-    >
-      <h1>IPv4SubnetStats</h1>
-      <TitledContainer title="Input">
-        <IPv4SubnetInput
-          onIpChange={handleIpChange}
-          ipPlaceholder="eg. 192.168.0.1"
-          onMaskChange={handleMaskChange}
-          maskPlaceholder="eg. /24 or 255.255.0.0"
-        />
-      </TitledContainer>
-
-      <SplitTableContainer title="Binary" align={'left'} rows={binary} />
-
-      <SplitTableContainer title="Details" align={'left'} rows={details} />
-
-      {ip && mask ? <IPv4SubnetSplitter ip={ip} mask={mask} /> : null}
-    </div>
+    <Container fluid>
+      <Row>
+        <div className="display-1 mx-auto">IPv4SubnetStats</div>
+      </Row>
+      <Row>
+        <Col>
+          <Row>
+            <Card style={{ width: '30rem' }}>
+              <Card.Header>Input</Card.Header>
+              <IPv4SubnetInput
+                onIpChange={handleIpChange}
+                ipPlaceholder="eg. 192.168.0.1"
+                onMaskChange={handleMaskChange}
+                maskPlaceholder="eg. /24 or 255.255.0.0"
+              />
+            </Card>
+          </Row>
+          <Row>
+            <SplitTableContainer title="Binary" align={'left'} rows={binary} />
+          </Row>
+          <Row>
+            <SplitTableContainer
+              title="Details"
+              align={'left'}
+              rows={details}
+            />
+          </Row>
+        </Col>
+        <Col className="h-100" md="auto">
+          {ip && mask ? <IPv4SubnetSplitter ip={ip} mask={mask} /> : null}
+        </Col>
+      </Row>
+    </Container>
   );
 }

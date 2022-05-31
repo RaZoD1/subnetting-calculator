@@ -9,7 +9,9 @@ export default function IPv4Address(props) {
   let ipv4 = null;
   if (!(ip instanceof IPv4)) {
     if (!IPv4.isValid(ipString)) {
-      return <span style={{ fontFamily: 'monospace' }}>{invalidMessage}</span>;
+      return (
+        <div className="d-inline-block font-monospace">{invalidMessage}</div>
+      );
     }
 
     ipv4 = new IPv4(ipString);
@@ -17,11 +19,16 @@ export default function IPv4Address(props) {
     ipv4 = ip;
   }
 
-  const display =
+  const displayText =
     displayType === 'decimal'
-      ? ipv4.getDecimalString(seperator)
+      ? ipv4
+          .getDecimalString(seperator)
+          .split('.')
+          // fill each octet with spaces to fill 3 digits
+          // .map((s) => s.padStart(3, String.fromCharCode(160)))
+          .join('.')
       : ipv4.getBinaryString(seperator);
-  return <span style={{ fontFamily: 'monospace' }}>{display}</span>;
+  return <div className="d-inline-block font-monospace">{displayText}</div>;
 }
 
 IPv4Address.defaultProps = {

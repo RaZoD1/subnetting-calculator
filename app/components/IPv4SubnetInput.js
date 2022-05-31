@@ -2,42 +2,24 @@ import React from 'react';
 
 import IPv4AddressInput from './IPv4AddressInput';
 import IPv4MaskInput from './IPv4MaskInput';
-import SplitTable from './SplitTable';
+
+import Form from 'react-bootstrap/Form';
 
 export default function IPv4SubnetInput(props) {
   const { onIpChange, ipPlaceholder, ipLabel } = props;
   const { onMaskChange, maskPlaceholder, maskLabel } = props;
 
-  const ipId = Math.random().toString(36).substring(2, 12);
-  const maskId = Math.random().toString(36).substring(2, 12);
-
-  const rows = [
-    {
-      left: <label htmlFor={ipId}>{ipLabel}</label>,
-      right: (
-        <IPv4AddressInput
-          id={ipId}
-          onChange={onIpChange}
-          placeholder={ipPlaceholder}
-        />
-      ),
-    },
-    {
-      left: <label htmlFor={maskId}>{maskLabel}</label>,
-      right: (
-        <IPv4MaskInput
-          id={maskId}
-          onChange={onMaskChange}
-          placeholder={maskPlaceholder}
-        />
-      ),
-    },
-  ];
-
   return (
-    <div>
-      <SplitTable rows={rows} />
-    </div>
+    <Form>
+      <Form.Group>
+        <Form.Label>{ipLabel}</Form.Label>
+        <IPv4AddressInput onChange={onIpChange} placeholder={ipPlaceholder} />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>{maskLabel}</Form.Label>
+        <IPv4MaskInput onChange={onMaskChange} placeholder={maskPlaceholder} />
+      </Form.Group>
+    </Form>
   );
 }
 IPv4SubnetInput.defaultProps = {

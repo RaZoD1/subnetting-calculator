@@ -7,9 +7,12 @@ import {
   getLastHost,
   getBroadcast,
 } from '../utils/Subnetting';
-import TitledContainer from './TitledContainer';
-import IPv4Address from './IPv4Address';
 import IPv4SubnetRow from './IPv4SubnetRow';
+
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Table from 'react-bootstrap/Table';
+import Form from 'react-bootstrap/Form';
 
 export default function IPv4SubnetSplitter(props) {
   const { ip, mask } = props;
@@ -76,36 +79,35 @@ export default function IPv4SubnetSplitter(props) {
     calculateSubnets(nearestValidNets);
   }, [ip, mask]);
 
+  const controlClasses = [];
+  if (!inputError && splitUserString != '') controlClasses.push('is-valid');
+  if (inputError && splitUserString != '') controlClasses.push('is-invalid');
+
   return (
-    <TitledContainer title={'Subnet Splitter'}>
+    <Card style={{ width: 'max-content' }}>
+      <Card.Header>Subnet Splitter</Card.Header>
+      <ListGroup variant="flush">
+        <ListGroup.Item>
+          <Form>
+            <Form.Group>
+              <Form.Label>Amount of Subnets</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Amount of Subnets"
+                value={splitUserString}
+                onChange={handleChange}
+                className={controlClasses.join(' ')}
+              />
+              <Form.Text>{nearestValidNets}</Form.Text>
+            </Form.Group>
+          </Form>
+        </ListGroup.Item>
+      </ListGroup>
       <div>
-        <label>
-          Amount of subnets&nbsp;
-          <input
-            type="text"
-            onChange={handleChange}
-            value={splitUserString}
-            className={inputError ? 'input-error' : ''}
-          />{' '}
-          <span>({nearestValidNets})</span>
-        </label>
-      </div>
-      <div
-        style={{
-          overflowY: 'scroll',
-          height: '10rem',
-          border: '1px solid black',
-        }}
-      >
-        <table
-          style={{
-            borderCollapse: 'separate',
-            borderSpacing: '50px 0',
-          }}
-        >
+        <Table striped bordered hover>
           <thead>
             <tr>
-              <th>Nr.</th>
+              <th>#</th>
               <th>Subnetmask</th>
               <th>Subnetaddress</th>
               <th>First Host</th>
@@ -118,9 +120,9 @@ export default function IPv4SubnetSplitter(props) {
               <IPv4SubnetRow subnet={subnet} index={index} />
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
-    </TitledContainer>
+    </Card>
   );
 }
 IPv4SubnetSplitter.defaultProps = {

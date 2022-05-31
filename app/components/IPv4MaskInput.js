@@ -19,11 +19,9 @@ export default function IPv4MaskInput(props) {
     }
   };
 
-  const errorStyle = {
-    color: 'red',
-    fontWeight: 'bold',
-    border: '1px solid red',
-  };
+  const classes = ['form-control'];
+  if (maskIsValid) classes.push('is-valid');
+  if (!(maskIsValid || maskUserString == '')) classes.push('is-invalid');
 
   return (
     <input
@@ -31,7 +29,7 @@ export default function IPv4MaskInput(props) {
       value={maskUserString}
       onChange={handleChange}
       placeholder={placeholder}
-      style={maskIsValid || maskUserString == '' ? undefined : errorStyle}
+      className={classes.join(' ')}
     />
   );
 }
