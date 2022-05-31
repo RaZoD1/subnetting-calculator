@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ListGroup from 'react-bootstrap/ListGroup';
+import Table from 'react-bootstrap/Table';
 
 const alignOptions = {
   left: { left: 'left', right: 'left' },
@@ -14,30 +15,40 @@ export default function SplitTable(props) {
   const alignOption = alignOptions[align] || alignOptions.left;
 
   return (
-    <ListGroup variant="flush" className="w-100">
-      {rows?.map((row, i) => {
-        const { left, right } = row;
+    <Table className="mb-0">
+      <tbody>
+        {rows.map((row, i) => (
+          <tr key={i}>
+            <td style={{ textAlign: alignOption.left }}>{row.left}</td>
+            <td style={{ textAlign: alignOption.right }}>{row.right}</td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+    // <ListGroup variant="flush">
+    //   {rows?.map((row, i) => {
+    //     const { left, right } = row;
 
-        return (
-          <div key={'row' + i}>
-            <ListGroup.Item>
-              <div
-                className="w-50 d-inline-block"
-                style={{ textAlign: alignOption.left }}
-              >
-                {left}
-              </div>
-              <div
-                className="w-50 d-inline-block"
-                style={{ textAlign: alignOption.right }}
-              >
-                {right}
-              </div>
-            </ListGroup.Item>
-          </div>
-        );
-      })}
-    </ListGroup>
+    //     return (
+    //       <div key={'row' + i}>
+    //         <ListGroup.Item>
+    //           <div
+    //             className="d-inline-block"
+    //             style={{ textAlign: alignOption.left }}
+    //           >
+    //             {left}
+    //           </div>
+    //           <div
+    //             className="d-inline-block"
+    //             style={{ textAlign: alignOption.right }}
+    //           >
+    //             {right}
+    //           </div>
+    //         </ListGroup.Item>
+    //       </div>
+    //     );
+    //   })}
+    // </ListGroup>
   );
 }
 SplitTable.defaultProps = {

@@ -10,8 +10,7 @@ import {
   getLastHost,
 } from '../utils/Subnetting';
 
-import TitledContainer from './TitledContainer';
-import SplitTableContainer from './SplitTableContainer';
+import SplitTable from './SplitTable';
 import IPv4SubnetSplitter from './IPv4SubnetSplitter';
 
 import Card from 'react-bootstrap/Card';
@@ -32,11 +31,11 @@ export default function IPv4SubnetStats(props) {
 
   const details = [
     {
-      left: 'subnetmask',
+      left: 'Subnet-Mask',
       right: <IPv4Address ip={mask?.ipv4} invalidMessage={'___.___.___.___'} />,
     },
     {
-      left: 'subnetaddress',
+      left: 'Subnet-Address',
       right: (
         <IPv4Address
           ip={getSubnetAddress(ip, mask)}
@@ -45,7 +44,7 @@ export default function IPv4SubnetStats(props) {
       ),
     },
     {
-      left: 'firsthost',
+      left: 'First Host',
       right: (
         <IPv4Address
           ip={getFirstHost(ip, mask)}
@@ -54,7 +53,7 @@ export default function IPv4SubnetStats(props) {
       ),
     },
     {
-      left: 'lasthost',
+      left: 'Last Host',
       right: (
         <IPv4Address
           ip={getLastHost(ip, mask)}
@@ -63,7 +62,7 @@ export default function IPv4SubnetStats(props) {
       ),
     },
     {
-      left: 'broadcast',
+      left: 'Broadcast-Address',
       right: (
         <IPv4Address
           ip={getBroadcast(ip, mask)}
@@ -99,33 +98,43 @@ export default function IPv4SubnetStats(props) {
   return (
     <Container fluid>
       <Row>
-        <div className="display-1 mx-auto">IPv4SubnetStats</div>
+        <div className="display-1 text-center">IPv4SubnetStats</div>
       </Row>
-      <Row>
+      <Row sm={1} md={2}>
         <Col>
           <Row>
-            <Card style={{ width: '30rem' }}>
-              <Card.Header>Input</Card.Header>
-              <IPv4SubnetInput
-                onIpChange={handleIpChange}
-                ipPlaceholder="eg. 192.168.0.1"
-                onMaskChange={handleMaskChange}
-                maskPlaceholder="eg. /24 or 255.255.0.0"
-              />
-            </Card>
+            <Container>
+              <Card>
+                <Card.Header>Input</Card.Header>
+                <Card.Body>
+                  <IPv4SubnetInput
+                    onIpChange={handleIpChange}
+                    ipPlaceholder="eg. 192.168.0.1"
+                    onMaskChange={handleMaskChange}
+                    maskPlaceholder="eg. /24 or 255.255.0.0"
+                  />
+                </Card.Body>
+              </Card>
+            </Container>
           </Row>
           <Row>
-            <SplitTableContainer title="Binary" align={'left'} rows={binary} />
+            <Container>
+              <Card>
+                <Card.Header>Binary</Card.Header>
+                <SplitTable rows={binary} align={'left'} />
+              </Card>
+            </Container>
           </Row>
           <Row>
-            <SplitTableContainer
-              title="Details"
-              align={'left'}
-              rows={details}
-            />
+            <Container>
+              <Card>
+                <Card.Header>Details</Card.Header>
+                <SplitTable rows={details} align={'left'} />
+              </Card>
+            </Container>
           </Row>
         </Col>
-        <Col className="h-100" md="auto">
+        <Col className="h-100 overflow-hidden">
           {ip && mask ? <IPv4SubnetSplitter ip={ip} mask={mask} /> : null}
         </Col>
       </Row>
