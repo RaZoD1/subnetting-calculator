@@ -84,7 +84,7 @@ export default function IPv4SubnetSplitter(props) {
   if (inputError && splitUserString != '') controlClasses.push('is-invalid');
 
   return (
-    <Card style={{ width: 'max-content' }}>
+    <Card>
       <Card.Header>Subnet Splitter</Card.Header>
       <ListGroup variant="flush">
         <ListGroup.Item>
@@ -98,13 +98,13 @@ export default function IPv4SubnetSplitter(props) {
                 onChange={handleChange}
                 className={controlClasses.join(' ')}
               />
-              <Form.Text>{nearestValidNets}</Form.Text>
+              <Form.Text>Generated {nearestValidNets} Subnets</Form.Text>
             </Form.Group>
           </Form>
         </ListGroup.Item>
       </ListGroup>
       <div>
-        <Table striped bordered hover>
+        <Table striped bordered hover className="mb-0">
           <thead>
             <tr>
               <th>#</th>
