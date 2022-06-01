@@ -13,5 +13,5 @@ It is also capable of calculating subnets of a given network.
 ## Setup
 
 1.  Execute `npm i` to setup the node environment and install dependecies.
-2.  Run `npm start dev` to open a local dev server.
-3.  Run `npm start build` to build the project to the build directory
+2.  Run `npm run dev` to open a local dev server.
+3.  Run `npm run build` to build the project to the build directory
