@@ -1,7 +1,7 @@
 # Subnet-Calculator
 
 Subnet Calculator is a tool for showing info of IPv4-Addresses.
-It is also capable of calculation subnets of a given network.
+It is also capable of calculating subnets of a given network.
 
 ## Used Technology
 
